@@ -4801,28 +4801,3 @@ namespace MissionPlanner
 }
 
 
-// 在MainV2.cs中处理航点插入逻辑
-private void AddRelativeWaypoint_Click(object sender, EventArgs e)
-{
-    var selectedWP = flightPlanner.WPList[flightPlanner.SelectedWP];
-    using (var dialog = new RelativeWaypointDialog())
-    {
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-            // 使用CoordinateSharp计算新坐标
-            var newCoord = CoordinateSharp.Coordinate(selectedWP.Lat, selectedWP.Lng)
-                .Translate(dialog.Distance, dialog.Bearing);
-
-            // 创建新航点并插入列表
-            Locationwp newWP = new Locationwp()
-            {
-                id = (byte)MAVLink.MAV_CMD.WAYPOINT,
-                lat = newCoord.Latitude.DecimalDegree,
-                lng = newCoord.Longitude.DecimalDegree,
-                alt = dialog.InheritAlt ? selectedWP.alt : dialog.CustomAlt
-            };
-            flightPlanner.WPList.Insert(flightPlanner.SelectedWP + 1, newWP);
-            flightPlanner.UpdateWaypoints();
-        }
-    }
-}
