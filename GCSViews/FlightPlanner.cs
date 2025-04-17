@@ -65,7 +65,6 @@ namespace MissionPlanner.GCSViews
             Init();
         }
 
-contextMenuStrip1.Items.Add(new ToolStripMenuItem("添加相对航点", null, AddRelativeWaypoint_Click));
 
 
         private void but_mincommands_Click(object sender, System.EventArgs e)
